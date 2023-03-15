@@ -17,11 +17,11 @@ def shuffleChores():  # method to shuffle chores: returns string with list of ch
         "sweep/mop & living room",
     ]  # list of chores to choose from, should be same size as people list
     people = [
-        "Andy",
-        "Adrien",
-        "Jeson",
-        "Justin",
-        "Marcus",
+        "Roommate 1",
+        "Roommate 2",
+        "Roommate 3",
+        "Roommate 4",
+        "Roommate 5",
     ]  # define list of roommates to split chores between
     newChores = [-1, -1, -1, -1, -1]
     currentDate = datetime.datetime.now()
@@ -42,13 +42,17 @@ def shuffleChores():  # method to shuffle chores: returns string with list of ch
     for chore_index in range(totalChores):
         nextChore_index = roll(chore_index)
         if (
-            chore_index == 4 and nextChore_index == oldChores[4]
-        ):  # if last job is same as before, swap with random other person
-            swap_index = random.randrange(4)
+            chore_index == totalChores - 1
+            and nextChore_index == oldChores[totalChores - 1]
+        ):  # if last job is same as before, swap with another person who didn't have that job last
+            swap_index = random.randrange(totalChores - 1)
+            while oldChores[swap_index] == nextChore_index:
+                swap_index = random.randrange(totalChores - 1)
             nextChore_index, newChores[swap_index] = (
                 newChores[swap_index],
                 nextChore_index,
             )
+
         newChores[chore_index] = nextChore_index
         returnString += people[chore_index] + ": " + chores[nextChore_index] + "\n"
         del chores[nextChore_index]
@@ -71,8 +75,11 @@ async def on_message(message):  # Message Response:
             await message.add_reaction("\U0001F596")
         if message.author.id == int(os.environ["OWNER"]):  # Owner Response:
             if message.content == "$ shuffle chores":
-                string = shuffleChores()
-                await message.channel.send(string)
+                response = shuffleChores()
+                await message.channel.send(response)
+            else:
+                response = "Unrecognized command:" + message.content
+                await message.channel.send(response)
         else:  # -- Response for anything starting with $ but not from owner
             print("Message not from owner.")
             print(message.content + "\n" + "ID: " + str(message.author.id))
