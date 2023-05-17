@@ -15,3 +15,8 @@ Copy the scope link into your browser and add the bot to the server you choose.
 
 If you could get it hosted with a database, it would be a great improvement to make a second command that would store the last distribution of chores to the DB
 so that each week, the new set of chores can be guaranteed to be different even when the server goes down. Currently, fresh sets of chores are only (mostly) going to occur when the bot has not lost connection.
+
+Instructions for use:
+command for chore shuffle: $ shuffle chores
+general hello: $ hello
+the general hello message, if sent by the owner, will also display instructions for chore shuffling.

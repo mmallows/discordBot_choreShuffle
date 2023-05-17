@@ -73,6 +73,10 @@ async def on_message(message):  # Message Response:
         if message.content == "$ hello":
             await message.channel.send("Hello, {0.author.name}!".format(message))
             await message.add_reaction("\U0001F596")
+            if message.author.id == int(os.environ["OWNER"]):
+                await message.channel.send(
+                    "For chore shuffle, send: $ shuffle chores".format(message)
+                )
         if message.author.id == int(os.environ["OWNER"]):  # Owner Response:
             if message.content == "$ shuffle chores":
                 response = shuffleChores()
