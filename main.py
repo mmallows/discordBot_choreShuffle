@@ -32,7 +32,7 @@ def shuffleChores():  # method to shuffle chores: returns string with list of ch
     def roll(chore_index):  # returns randomly generated index for next chore
         nextChore_index = random.randrange(0, len(chores))
         while (
-            chore_index < 4 and nextChore_index == oldChores[chore_index]
+            chore_index < len(chores) - 1 and nextChore_index == oldChores[chore_index]
         ):  # attempts to ensure new chores are different from old chores
             # first condition (chore_index < 4) keeps method from looping forever on selecting last chore if same as old chore
             nextChore_index = random.randrange(0, len(chores))
